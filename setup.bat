@@ -6,7 +6,7 @@ echo ================================
 :: Verifica se o Python está instalado
 python --version >nul 2>&1
 if %errorlevel% neq 0 (
-    echo Python não encontrado! Baixando e instalando...
+    echo Python nao encontrado! Baixando e instalando...
     curl -o python-installer.exe https://www.python.org/ftp/python/3.9.10/python-3.9.10-amd64.exe
     start /wait python-installer.exe /quiet InstallAllUsers=1 PrependPath=1
     del python-installer.exe
