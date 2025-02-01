@@ -1,9 +1,13 @@
-import gradio as gr
 import os
 import difflib
 import sys
+import time
+from pathlib import Path
+from concurrent.futures import ProcessPoolExecutor
+import gradio as gr
+import webview
 
-def compare_texts(text1, text2):
+def compara_texto(text1, text2):
     # Divide os textos em linhas
     text1_lines = text1.splitlines()
     text2_lines = text2.splitlines()
@@ -50,7 +54,7 @@ def compare_texts(text1, text2):
 
 # Cria a interface do Gradio
 interface = gr.Interface(
-    fn=compare_texts,
+    fn=compara_texto,
     inputs=[
         gr.Textbox(label="Texto 1", lines=5, placeholder="Digite o primeiro texto aqui..."),
         gr.Textbox(label="Texto 2", lines=5, placeholder="Digite o segundo texto aqui...")
@@ -65,6 +69,21 @@ interface = gr.Interface(
     theme="default"
 )
 
-# Inicia o servidor com configurações específicas
-interface.launch(server_port=7861)
+def fechamento_de_janela():
+    sys.exit()
+
+def inicia_gradio():
+    interface.launch(server_port=7861)
+
+def inicia_webview():
+    janela = webview.create_window('Comparador de Texto', 'http://127.0.0.1:7861')
+    janela.events.closed += fechamento_de_janela
+    webview.start()
+
+if __name__ == "__main__":
+    with ProcessPoolExecutor() as executor:
+        executor.submit(inicia_gradio)
+        time.sleep(5)
+        executor.submit(inicia_webview)
+
 
