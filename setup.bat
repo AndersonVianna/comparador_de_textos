@@ -24,7 +24,7 @@ echo ================================
 echo Instalando dependências...
 echo ================================
 pip install --upgrade pip
-pip install gradio
+pip install -r requirements.txt
 
 :: Executa o programa
 echo ================================
