@@ -30,4 +30,4 @@ pip install -r requirements.txt
 echo ================================
 echo 🚀 Iniciando o programa...
 echo ================================
-python app.py
+python comparador.py
